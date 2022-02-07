@@ -19,7 +19,7 @@ const Index = ({ items, npos }) => (
                <Text>Orchestrating donations in the bay area.</Text>
             </Box>
          </Flex>
-         <Search items={items} />
+         <Search items={items} npos={npos} />
       </Container>
       <Footer />
    </>
@@ -29,7 +29,6 @@ const Index = ({ items, npos }) => (
 // getStaticProps must be on the page component, not child components
 export const getStaticProps = async () => {
    const { data: items } = await supabase.from('items_test').select('*')
-
    const { data: npos } = await supabase.from('npos_test').select('*')
 
    return {

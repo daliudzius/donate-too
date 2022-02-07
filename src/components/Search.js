@@ -13,7 +13,10 @@ import {
    VisuallyHidden,
 } from '@chakra-ui/react'
 import SearchResults from '../components/SearchResults'
+import NpoResults from '../components/NpoResults'
 import { supabase } from '../utils/supabaseClient'
+import { useState } from 'react'
+import Fuse from 'fuse.js'
 
 const handleSubmit = () => {
    setIsSearch.toggle
@@ -21,34 +24,36 @@ const handleSubmit = () => {
 
 const Search = ({ items, npos }) => {
    const [isSearch, setIsSearch] = useBoolean(true)
+   const [searchQuery, setSearchQuery] = useState("");
+   const [searchResults, setSearchResults] = useState([]);
+
+   const fuse = new Fuse(items, {
+      includeScore: true,
+      threshold: 0.4,
+      keys: ['name'],
+   })
+
+   const handleSearch = (searchQuery) => {
+      setSearchQuery(searchQuery);
+      const results = fuse.search(searchQuery);
+      setSearchResults(results);
+    };
+
    return (
       <>
-         <form onSubmit={setIsSearch.toggle}>
+         <form onSubmit={setIsSearch.on}>
             <FormControl>
-               {isSearch && (
-                  <>
-                     <Input
-                        placeholder={'i can donate...'}
-                        variant={'filled'}
-                        size={'lg'}
-                        px={8}
-                     />
-                     <VisuallyHidden>
-                        <Button type={'submit'}></Button>
-                     </VisuallyHidden>
-                  </>
-               )}
-               {!isSearch && (
-                  <Input
-                     placeholder={'Item Searched'}
-                     variant={'filled'}
-                     size={'lg'}
-                     px={8}
-                  />
-               )}
+               <Input
+                  placeholder={isSearch ? 'i can donate...' : 'Item Searched'}
+                  variant={'filled'}
+                  size={'lg'}
+                  px={8}
+                  value={searchQuery}
+                  onChange={(event) => handleSearch(event.target.value)}
+               />
             </FormControl>
          </form>
-         {isSearch && <SearchResults items={items} />}
+         <SearchResults items={searchResults} />
          {!isSearch && <NpoResults npos={npos} />}
       </>
    )
