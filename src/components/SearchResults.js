@@ -18,26 +18,11 @@ import {
 } from '@chakra-ui/react'
 import { AiOutlineEnter } from 'react-icons/ai'
 import { IoAppsOutline } from 'react-icons/io5'
-
-const categoryIcon = (categoryName) => (
-   <Center
-      textAlign={'center'}
-      bg={'blue.500'}
-      rounded={'md'}
-      w={'5.5rem'}
-      h={7}
-   >
-      <Text fontSize={'sm'} color={'white'} fontWeight={'bold'}>
-         {categoryName.toUpperCase()}
-      </Text>
-   </Center>
-)
+import CategoryItem from './CategoryItem'
 
 const ShowAllCategoriesRow = (numResults, selectedIndex) => {
    const isSelected = numResults === selectedIndex
-   const row
-   
-   row = numResults && (
+   const row = numResults && (
       <>
          <Divider />
          <ListItem>
@@ -48,19 +33,17 @@ const ShowAllCategoriesRow = (numResults, selectedIndex) => {
                rounded={'lg'}
                bg={isSelected && 'blue.100'}
             >
-               <Text
-                  fontSize={'xl'}
-                  fontWeight={isSelected && 'semibold'}
-               >
+               <Text fontSize={'xl'} fontWeight={isSelected && 'semibold'}>
                   Show All Categories
                </Text>
-               <Spacer/>
+               <Spacer />
                <Box>
                   <Center
                      width={32}
                      alignContent={'center'}
                      justifyContent={'center'}
                      fontSize={'2xl'}
+                     color={'blue.500'}
                   >
                      {isSelected && (
                         <>
@@ -78,12 +61,11 @@ const ShowAllCategoriesRow = (numResults, selectedIndex) => {
    return row
 }
 
-const SearchResults = ({ items, selectedIndex }) => {
+const SearchResults = ({ items, selectedIndex, setSelectedIndex, isEmpty }) => {
    let isSelected = false
-
    return (
       <Box w={'100%'} mt={4}>
-         {items && (
+         {
             <List spacing={1}>
                {items.map((item, index) => {
                   item = item.item
@@ -98,18 +80,7 @@ const SearchResults = ({ items, selectedIndex }) => {
                            rounded={'lg'}
                            bg={isSelected && 'blue.100'}
                         >
-                           <HStack spacing={8}>
-                              {categoryIcon(item.category)}
-                              <Text
-                                 fontSize={'2xl'}
-                                 fontWeight={isSelected && 'semibold'}
-                              >
-                                 {item.isCategory
-                                    ? item.description
-                                    : item.name}
-                              </Text>
-                           </HStack>
-
+                           <CategoryItem item={item} isSelected={isSelected} />
                            <Spacer />
                            <Box>
                               <Center
@@ -117,6 +88,7 @@ const SearchResults = ({ items, selectedIndex }) => {
                                  alignContent={'center'}
                                  justifyContent={'center'}
                                  fontSize={'2xl'}
+                                 color={'blue.500'}
                               >
                                  {isSelected && (
                                     <>
@@ -136,11 +108,11 @@ const SearchResults = ({ items, selectedIndex }) => {
                   )
                })}
                {
-                  // if selecting last row, 'Show All Categories'
-                  ShowAllCategoriesRow(items.length, selectedIndex)
+                  // add final row for 'Show All Categories'
+                  !isEmpty && ShowAllCategoriesRow(items.length, selectedIndex)
                }
             </List>
-         )}
+         }
       </Box>
    )
 }

@@ -5,11 +5,19 @@
  * SearchResults component.
  */
 
-import { Input } from '@chakra-ui/react'
+import {
+   InputGroup,
+   Input,
+   InputRightElement,
+   IconButton,
+   Center,
+   Icon,
+} from '@chakra-ui/react'
 import SearchResults from '../components/SearchResults'
 import NpoResults from '../components/NpoResults'
 import { useState } from 'react'
 import Fuse from 'fuse.js'
+import { CloseIcon } from '@chakra-ui/icons'
 
 const MAX_RESULTS = 4
 
@@ -17,7 +25,7 @@ const Search = ({ items, npos }) => {
    const [searchInput, setSearchInput] = useState('')
    const [searchResults, setSearchResults] = useState([])
    const [selectedIndex, setSelectedIndex] = useState(0)
-   const [selectedItem, setSelectedItem] = useState({})
+   const [selectedItem, setSelectedItem] = useState()
 
    // initialize the fuse search options
    const fuse = new Fuse(items, {
@@ -32,10 +40,10 @@ const Search = ({ items, npos }) => {
          case 'Enter':
             // if 'Show All Categories' is selected
             if (selectedIndex === searchResults.length) {
-               alert('To-do: Show the categories.')
+               console.log('To-do: Show the categories.')
             }
             // if an item is selected
-            if (searchResults.length > 0) {
+            else if (searchResults.length > 0) {
                let currentItem = searchResults[selectedIndex].item
                setSelectedItem(currentItem)
                setSearchInput(currentItem.name)
@@ -66,25 +74,54 @@ const Search = ({ items, npos }) => {
       setSelectedIndex(0)
    }
 
+   const handleClear = () => {
+      setSearchInput('')
+      setSearchResults([])
+      setSelectedIndex(0)
+      setSelectedItem()
+   }
+
    return (
       <>
-         <Input
-            placeholder={selectedItem ? 'i can donate...' : 'Item Searched'}
-            variant={'filled'}
-            fontSize={'2xl'}
-            px={8}
-            value={searchInput}
-            onChange={(event) => handleSearch(event.target.value)}
-            onKeyDown={(event) => handleKeyDown(event.key)}
-            h={16}
-         />
-         {selectedItem && (
+         <InputGroup>
+            <Input
+               placeholder={'i can donate...'}
+               variant={'filled'}
+               fontSize={'2xl'}
+               px={8}
+               value={searchInput}
+               onChange={(event) => handleSearch(event.target.value)}
+               onKeyDown={(event) => handleKeyDown(event.key)}
+               h={16}
+            />
+            {searchInput && (
+               <Center>
+                  <InputRightElement h={'100%'} mr={6}>
+                     <IconButton
+                        aria-label='Clear search'
+                        ml={4}
+                        fontSize={'2xl'}
+                        colorScheme={'blue'}
+                        variant={'ghost'}
+                        icon={<CloseIcon />}
+                        onClick={() => handleClear()}
+                     />
+                  </InputRightElement>
+               </Center>
+            )}
+         </InputGroup>
+         {!selectedItem && (
             <SearchResults
                items={searchResults}
                selectedIndex={selectedIndex}
-            />
+               isEmpty={searchInput === ''}
+            >
+               {console.log(selectedItem)}
+            </SearchResults>
          )}
-         {!selectedItem && <NpoResults npos={npos} />}
+         {selectedItem && (
+            <NpoResults npos={npos}>{console.log(selectedItem)}</NpoResults>
+         )}
       </>
    )
 }
