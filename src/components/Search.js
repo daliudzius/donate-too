@@ -12,6 +12,7 @@ import {
    IconButton,
    Center,
    Icon,
+   useDisclosure,
 } from '@chakra-ui/react'
 import SearchResults from '../components/SearchResults'
 import NpoResults from '../components/NpoResults'
@@ -25,7 +26,8 @@ const Search = ({ items, npos }) => {
    const [searchInput, setSearchInput] = useState('')
    const [searchResults, setSearchResults] = useState([])
    const [selectedIndex, setSelectedIndex] = useState(0)
-   const [selectedItem, setSelectedItem] = useState()
+   const [selectedItem, setSelectedItem] = useState(null)
+   const { isOpen, onOpen, onClose } = useDisclosure()
 
    // initialize the fuse search options
    const fuse = new Fuse(items, {
@@ -63,6 +65,9 @@ const Search = ({ items, npos }) => {
 
    // handles search and sets the search results array
    const handleSearch = (query) => {
+      // if the query is non-empty, keep the search results dropdown open
+      query ? onOpen() : onClose()
+
       // update input value
       setSearchInput(query)
 
@@ -71,14 +76,16 @@ const Search = ({ items, npos }) => {
       setSearchResults(results)
 
       // reset selected index on input update
-      setSelectedIndex(0)
+
+      //setSelectedIndex(0)
    }
 
    const handleClear = () => {
       setSearchInput('')
       setSearchResults([])
-      setSelectedIndex(0)
-      setSelectedItem()
+      //setSelectedIndex(0)
+      setSelectedItem(null)
+      onClose()
    }
 
    return (
@@ -91,7 +98,7 @@ const Search = ({ items, npos }) => {
                px={8}
                value={searchInput}
                onChange={(event) => handleSearch(event.target.value)}
-               onKeyDown={(event) => handleKeyDown(event.key)}
+               //onKeyDown={(event) => handleKeyDown(event.key)}
                h={16}
             />
             {searchInput && (
@@ -110,18 +117,19 @@ const Search = ({ items, npos }) => {
                </Center>
             )}
          </InputGroup>
-         {!selectedItem && (
+         {searchResults && (
             <SearchResults
                items={searchResults}
-               selectedIndex={selectedIndex}
                isEmpty={searchInput === ''}
+               isOpen={isOpen}
             >
-               {console.log(selectedItem)}
+               {console.log(searchResults)}
             </SearchResults>
          )}
-         {selectedItem && (
-            <NpoResults npos={npos}>{console.log(selectedItem)}</NpoResults>
-         )}
+         {
+            // selectedItem && (
+            //  <NpoResults npos={npos}>{console.log(selectedItem)}</NpoResults>)
+         }
       </>
    )
 }
