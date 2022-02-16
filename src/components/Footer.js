@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react'
 
 const Footer = () => (
    <footer>
-      <Flex></Flex>
+      <Flex>Footer</Flex>
    </footer>
 )
 
