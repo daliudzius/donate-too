@@ -14,14 +14,14 @@ const Search = ({ items, npos }) => {
 
    return (
       <>
-         {isItems ?? (
+         {isItems && (
             <ItemSearch
                items={items}
                setSelectedItem={setSelectedItem}
                setIsItems={setIsItems}
             />
          )}
-         {!isItems ?? (
+         {!isItems && (
             <NposSearch
                npos={npos}
                selectedItem={selectedItem}
