@@ -21,7 +21,8 @@ import { AiOutlineEnter } from 'react-icons/ai'
 import { IoAppsOutline } from 'react-icons/io5'
 import { Search2Icon } from '@chakra-ui/icons'
 
-const ItemSearch = ({ items, setIsItems }) => {
+// use setSelectedItem and setIsItems
+const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
    const [focusedId, setFocusedId] = useState(null)
 
    const isFocused = (itemId) => {
@@ -41,7 +42,7 @@ const ItemSearch = ({ items, setIsItems }) => {
             freeSolo
             focusInputOnSelect
             selectOnFocus
-            maxSuggestions={3}
+            maxSuggestions={4}
             emptyState={
                <Text pl={4} fontSize={'2xl'}>
                   No results found
@@ -69,8 +70,6 @@ const ItemSearch = ({ items, setIsItems }) => {
                   h={'100%'}
                   pl={16}
                   pb={1}
-                  grow={1}
-                  textAlign={''}
                />
             </InputGroup>
 
@@ -100,6 +99,7 @@ const ItemSearch = ({ items, setIsItems }) => {
                               color={'blue.500'}
                            >
                               <Kbd>Enter</Kbd>
+                              {console.log(item)}
                               <Spacer />
                               <Icon ml={4} boxSize={10} as={AiOutlineEnter} />
                            </Center>

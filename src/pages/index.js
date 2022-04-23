@@ -2,7 +2,8 @@ import { Box, Flex, Heading, Container, Text } from '@chakra-ui/react'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { supabase } from '../utils/supabaseClient'
+import { gql } from '@apollo/client'
+import apollo from '../utils/apolloClient'
 import Search from '../components/Search'
 
 const Index = ({ items, npos }) => (
@@ -19,23 +20,60 @@ const Index = ({ items, npos }) => (
                <Text>Orchestrating donations in the bay area.</Text>
             </Box>
          </Flex>
-         <Search items={items} />
+         <Search items={items} npos={npos} />
       </Container>
       <Footer />
    </>
 )
 
+const GET_DATA = gql`
+   query GetData {
+      items_test {
+         id
+         isCategory
+         name
+         description
+         category
+      }
+      npos_test {
+         description
+         address
+         email
+         id
+         is_charitable
+         is_verified
+         name
+         phone
+      }
+      npo_item_test {
+         item_id
+         npo_id
+         id
+      }
+   }
+`
+
 // fetch the possible items and npos at build time
 // getStaticProps must be on the page component, not child components
 export const getStaticProps = async () => {
-   const { data: items } = await supabase.from('items_test').select('*')
+   const { data } = await apollo.query({
+      query: GET_DATA,
+   })
 
-   const { data: npos } = await supabase.from('npos_test').select('*')
+   // add accepted donation items to each npo
+   await data.npos_test.forEach((npo) => {
+      npo.items = data.npo_item_test.filter((item) => item.npo_id === npo.id)
+   })
+
+   // add accepting npos to each item
+   await data.items_test.forEach((item) => {
+      item.npos = data.npo_item_test.filter((npo) => npo.item_id === item.id)
+   })
 
    return {
       props: {
-         items,
-         npos,
+         items: data.items_test,
+         npos: data.npos_test,
       },
    }
 }

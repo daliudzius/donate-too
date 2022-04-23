@@ -7,10 +7,13 @@
 
 import { useState } from 'react'
 import ItemSearch from './ItemSearch'
+import NpoSearch from './NpoSearch'
 
 const Search = ({ items, npos }) => {
    const [isItems, setIsItems] = useState(true)
    const [selectedItem, setSelectedItem] = useState(null)
+
+   const handleSelection = () => {}
 
    return (
       <>
@@ -22,7 +25,7 @@ const Search = ({ items, npos }) => {
             />
          )}
          {!isItems && (
-            <NposSearch
+            <NpoSearch
                npos={npos}
                selectedItem={selectedItem}
                setIsItems={setIsItems}
