@@ -1,0 +1,81 @@
+export const items = [
+   {
+      category: 'fabrics',
+      description: 'blankets, quilts, and similar',
+      id: 1,
+      isCategory: false,
+      name: 'blankets',
+   },
+   {
+      category: 'food',
+      description: 'Unexpired cat food, canned or unopened.',
+      id: 3,
+      isCategory: false,
+      name: 'cat food',
+   },
+   {
+      category: 'food',
+      description: 'Unexpired dog food, canned or unopened.',
+      id: 4,
+      isCategory: false,
+      name: 'dog food',
+   },
+   {
+      category: 'cleaning',
+      description: 'Any unopened soap',
+      id: 5,
+      isCategory: false,
+      name: 'soap',
+   },
+   {
+      category: 'cleaning',
+      description: 'Any cleaning supplies',
+      id: 7,
+      isCategory: true,
+      name: 'cleaning',
+   },
+   {
+      category: 'tools',
+      description: 'Any tools',
+      id: 6,
+      isCategory: true,
+      name: 'tools',
+   },
+   {
+      category: 'leisure',
+      description: 'Any leisure item',
+      id: 8,
+      isCategory: true,
+      name: 'leisure',
+   },
+   {
+      category: 'leisure',
+      description: 'hardcover and softcover books',
+      id: 2,
+      isCategory: false,
+      name: 'books',
+   },
+]
+
+export const npos = [
+   {
+      id: 1,
+      name: "Dando's Foundation",
+      address: '123 Street, San Francisco, CA 94111',
+      description: 'We do stuff, and we do it for no profit.',
+      email: 'dando@foundation.org',
+      is_charitable: false,
+      is_verified: false,
+      phone: '(415) 123-4567',
+   },
+   {
+      id: 2,
+      name: "Niels' Nonprofit",
+      address: '99 Luftballoons Ave.',
+      description: 'We are good at hiding our profits.',
+      email: 'nnpo@email.com',
+      is_charitable: false,
+      is_verified: false,
+      phone: '(805) 999-0099',
+   },
+]

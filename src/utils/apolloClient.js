@@ -1,5 +1,7 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 
+// used for testing only
+
 const graphqlServer = process.env.HASURA_GRAPHQL_URI
 
 export default new ApolloClient({

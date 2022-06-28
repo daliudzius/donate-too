@@ -5,8 +5,9 @@ import Footer from '../components/Footer'
 import { gql } from '@apollo/client'
 import apollo from '../utils/apolloClient'
 import Search from '../components/Search'
+import { npos, items } from '../utils/test_data'
 
-const Index = ({ items, npos }) => (
+const Index = (/* { items, npos } */) => (
    <>
       <Head>
          <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -26,33 +27,7 @@ const Index = ({ items, npos }) => (
    </>
 )
 
-const GET_DATA = gql`
-   query GetData {
-      items_test {
-         id
-         isCategory
-         name
-         description
-         category
-      }
-      npos_test {
-         description
-         address
-         email
-         id
-         is_charitable
-         is_verified
-         name
-         phone
-      }
-      npo_item_test {
-         item_id
-         npo_id
-         id
-      }
-   }
-`
-
+/* // Currently using hardcoded test data at ../utils/test_data.js
 // fetch the possible items and npos at build time
 // getStaticProps must be on the page component, not child components
 export const getStaticProps = async () => {
@@ -76,6 +51,6 @@ export const getStaticProps = async () => {
          npos: data.npos_test,
       },
    }
-}
+} */
 
 export default Index
