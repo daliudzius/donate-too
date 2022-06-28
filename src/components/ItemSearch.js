@@ -34,7 +34,7 @@ const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
       //setSelectedItem(item.item)
    }
 
-   console.log('re-rendered Search')
+   console.log('Rendered ItemSearch')
 
    return (
       <Stack direction='column' w={'container.md'}>
@@ -99,7 +99,7 @@ const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
                               color={'blue.500'}
                            >
                               <Kbd>Enter</Kbd>
-                              {console.log(item)}
+                              {console.log(`focused item: ${item.name}`)}
                               <Spacer />
                               <Icon ml={4} boxSize={10} as={AiOutlineEnter} />
                            </Center>
