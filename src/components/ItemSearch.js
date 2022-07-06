@@ -29,9 +29,13 @@ const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
       return itemId === focusedId
    }
 
+   // item: item;
+   // selectMethod: "mouse" | "keyboard" | null;
+   // isNewInput: boolean;
    const handleSelected = (item, selectMethod, isNewInput) => {
-      console.log(`Selected - ${item.item.label} id=[${item.item.value}]`) //debug
-      //setSelectedItem(item.item)
+      console.log(`Selected - ${item.item.label} id=[${item.item.value}]`)
+      setSelectedItem(item.item)
+      //setIsItems(false)
    }
 
    console.log('Rendered ItemSearch')
@@ -39,15 +43,10 @@ const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
    return (
       <Stack direction='column' w={'container.md'}>
          <AutoComplete
-            freeSolo
             focusInputOnSelect
-            selectOnFocus
+            freeSolo // don't autoselect closest item on outside click
+            selectOnFocus // select text when input is focused
             maxSuggestions={4}
-            emptyState={
-               <Text pl={4} fontSize={'2xl'}>
-                  No results found
-               </Text>
-            }
             onOptionFocus={(item) => {
                setFocusedId(parseInt(item.item?.value, 10) ?? '-1')
             }}
@@ -99,7 +98,7 @@ const ItemSearch = ({ items, setSelectedItem, setIsItems }) => {
                               color={'blue.500'}
                            >
                               <Kbd>Enter</Kbd>
-                              {console.log(`focused item: ${item.name}`)}
+                              {/*console.log(`focused item: ${item.name}`)*/}
                               <Spacer />
                               <Icon ml={4} boxSize={10} as={AiOutlineEnter} />
                            </Center>

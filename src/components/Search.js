@@ -13,8 +13,7 @@ const Search = ({ items, npos }) => {
    const [isItems, setIsItems] = useState(true)
    const [selectedItem, setSelectedItem] = useState(null)
 
-   const handleSelection = () => {}
-
+   console.log(`Rendered Search. isItems = ${isItems}`)
    return (
       <>
          {isItems && (
