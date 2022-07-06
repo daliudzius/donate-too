@@ -2,8 +2,6 @@ import { Box, Flex, Heading, Container, Text } from '@chakra-ui/react'
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { gql } from '@apollo/client'
-import apollo from '../utils/apolloClient'
 import Search from '../components/Search'
 import { npos, items } from '../utils/test_data'
 
