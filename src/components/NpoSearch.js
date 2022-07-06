@@ -132,3 +132,5 @@ const NpoSearch = ({ npos, selectedItem, setIsItems }) => {
       </Stack>
    )
 }
+
+export default NpoSearch
