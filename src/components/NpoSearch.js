@@ -18,6 +18,7 @@ import {
    AutoCompleteItem,
    AutoCompleteList,
 } from '@choc-ui/chakra-autocomplete'
+import CategoryItem from './CategoryItem'
 
 const NpoSearch = ({ npos, selectedItem, setIsItems }) => {
    const [focusedId, setFocusedId] = useState(null)
