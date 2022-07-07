@@ -5,51 +5,31 @@
  * SearchResults component.
  */
 
-import {
-   Button,
-   Input,
-   useBoolean,
-   FormControl,
-   VisuallyHidden,
-} from '@chakra-ui/react'
-import SearchResults from '../components/SearchResults'
-import { supabase } from '../utils/supabaseClient'
-
-const handleSubmit = () => {
-   setIsSearch.toggle
-}
+import { useState } from 'react'
+import ItemSearch from './ItemSearch'
+import NpoSearch from './NpoSearch'
 
 const Search = ({ items, npos }) => {
-   const [isSearch, setIsSearch] = useBoolean(true)
+   const [isItems, setIsItems] = useState(true)
+   const [selectedItem, setSelectedItem] = useState(null)
+
+   console.log(`Rendered Search. isItems = ${isItems}`)
    return (
       <>
-         <form onSubmit={setIsSearch.toggle}>
-            <FormControl>
-               {isSearch && (
-                  <>
-                     <Input
-                        placeholder={'i can donate...'}
-                        variant={'filled'}
-                        size={'lg'}
-                        px={8}
-                     />
-                     <VisuallyHidden>
-                        <Button type={'submit'}></Button>
-                     </VisuallyHidden>
-                  </>
-               )}
-               {!isSearch && (
-                  <Input
-                     placeholder={'Item Searched'}
-                     variant={'filled'}
-                     size={'lg'}
-                     px={8}
-                  />
-               )}
-            </FormControl>
-         </form>
-         {isSearch && <SearchResults items={items} />}
-         {!isSearch && <NpoResults npos={npos} />}
+         {isItems && (
+            <ItemSearch
+               items={items}
+               setSelectedItem={setSelectedItem}
+               setIsItems={setIsItems}
+            />
+         )}
+         {!isItems && (
+            <NpoSearch
+               npos={npos}
+               selectedItem={selectedItem}
+               setIsItems={setIsItems}
+            />
+         )}
       </>
    )
 }

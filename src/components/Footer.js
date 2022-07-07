@@ -1,8 +1,8 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Center } from '@chakra-ui/react'
 
 const Footer = () => (
    <footer>
-      <Flex></Flex>
+      <Center></Center>
    </footer>
 )
 
