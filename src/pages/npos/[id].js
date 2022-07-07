@@ -1,4 +1,4 @@
-/*import { supabase } from '../../utils/supabaseClient'
+//import { supabase } from '../../utils/supabaseClient'
 
 const NpoDetails = () => (
    <>
@@ -6,8 +6,8 @@ const NpoDetails = () => (
    </>
 )
 
-export const getStaticPaths = async () => {
-   /onst { npos } = await supabase.from('npos').select('id')
+/* export const getStaticPaths = async () => {
+   const { npos } = await supabase.from('npos').select('id')
    const paths = npos.map(({ id }) => ({
       params: {
          id: id.toString(),
@@ -18,7 +18,6 @@ export const getStaticPaths = async () => {
       paths,
       fallback: false,
    }
-}
+} */
 
 export default NpoDetails
-*/
